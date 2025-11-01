@@ -1,0 +1,110 @@
+[
+  {
+    "Id": "b2a1f7c0-2a93-4d8f-a23e-9b1a24dcf5a1",
+    "Name": "John Doe",
+    "Email": "john.doe@example.com",
+    "Description": "My laptop overheats and shuts down after 10 minutes of use.",
+    "Summary": "Laptop overheating and unexpected shutdown.",
+    "ImageUrl": "uploads/laptop_issue.jpg",
+    "Status": "Resolved",
+    "Resolution": "\u05D1\u05E8\u05D5\u05DA \u05D4\u05E9\u05DD \u05D4\u05E1\u05EA\u05D9\u05D9\u05DD",
+    "CreatedAt": "2025-10-27T14:35:00Z",
+    "UpdatedAt": "2025-11-01T20:44:43.8444485Z"
+  },
+  {
+    "Id": "9a8b4c9e-7122-4d9f-bfb0-1cf5d14e8f73",
+    "Name": "Jane Smith",
+    "Email": "jane.smith@example.com",
+    "Description": "The washing machine doesn\u2019t drain water at the end of the cycle.",
+    "Summary": "Washing machine drainage issue.",
+    "ImageUrl": "uploads/washing_machine.jpg",
+    "Status": "In Progress",
+    "Resolution": "Technician scheduled for tomorrow.",
+    "CreatedAt": "2025-10-25T10:20:00Z",
+    "UpdatedAt": "2025-10-28T09:00:00Z"
+  },
+  {
+    "Id": "d41b86b1-c1b9-42ee-9777-7d20cbfb153e",
+    "Name": "Emily Johnson",
+    "Email": "emily.johnson@example.com",
+    "Description": "Air conditioner blows warm air even when set to cooling mode.",
+    "Summary": "AC cooling malfunction.",
+    "ImageUrl": "uploads/ac_unit.jpg",
+    "Status": "Resolved",
+    "Resolution": "Gas refill completed, tested successfully.",
+    "CreatedAt": "2025-10-20T08:45:00Z",
+    "UpdatedAt": "2025-10-23T16:00:00Z"
+  },
+  {
+    "Id": "bc5dfd6c-cc7d-4b31-8cf1-4a5139ef97ac",
+    "Name": "Daniel Lee",
+    "Email": "daniel.lee@example.com",
+    "Description": "My smartphone battery drains too fast even after a full charge.",
+    "Summary": "Fast battery drain issue on smartphone.",
+    "ImageUrl": "uploads/smartphone.jpg",
+    "Status": "Resolved",
+    "Resolution": "Battery replaced under warranty.",
+    "CreatedAt": "2025-10-10T09:15:00Z",
+    "UpdatedAt": "2025-10-18T13:40:00Z"
+  },
+  {
+    "Id": "a3c77e09-8e7b-4e61-9a48-8dc53133dbaa",
+    "Name": "Olivia Brown",
+    "Email": "olivia.brown@example.com",
+    "Description": "My internet connection drops every few minutes.",
+    "Summary": "Unstable internet connection issue.",
+    "ImageUrl": "uploads/router_issue.jpg",
+    "Status": "Open",
+    "Resolution": "",
+    "CreatedAt": "2025-10-29T11:00:00Z",
+    "UpdatedAt": "2025-10-29T11:00:00Z"
+  },
+  {
+    "Id": "dbf374c2-3bb4-4835-bab6-b515685e69df",
+    "Name": "yossef gabay",
+    "Email": "gabbayyo@gmail.com",
+    "Description": "i have problem with me pc , the cooling system is very noisy and get to hot temperture in seconds",
+    "Summary": "The computer\u0027s cooling system is excessively noisy and overheating quickly, indicating a potential cooling fan or heat sink issue that requires maintenance.",
+    "ImageUrl": "",
+    "Status": "In Progress",
+    "Resolution": "",
+    "CreatedAt": "2025-11-01T20:48:01.3193608Z",
+    "UpdatedAt": "2025-11-01T20:48:29.1736692Z"
+  },
+  {
+    "Id": "213a1473-2f69-458f-bebe-52fa80eca75c",
+    "Name": "asdsad",
+    "Email": "asdsad",
+    "Description": "asdasdas",
+    "Summary": "It seems that the provided text for the maintenance issue is missing or contains only gibberish (\u0022asdasdas\u0022). In order to provide a summary, I would need a detailed and coherent description of the issue.\n\nA good summary should include:\n\n1. A clear statement of the problem or maintenance issue.\n2. Any relevant details about the situation, such as the location, equipment involved, and any observed symptoms.\n3. The impact or consequences of the issue, if known.\n4. Any steps already taken to address the problem.\n\nOnce I have this information, I can craft a concise summary to help communicate the maintenance issue effectively.",
+    "ImageUrl": null,
+    "Status": "New",
+    "Resolution": "",
+    "CreatedAt": "2025-11-01T21:24:05.7816728Z",
+    "UpdatedAt": "2025-11-01T21:24:05.7816728Z"
+  },
+  {
+    "Id": "50107756-86c2-444e-aa71-62bd897a2b9c",
+    "Name": "asdsad",
+    "Email": "asdasd@sdasd.com",
+    "Description": "asdsadasdsad",
+    "Summary": "It seems that the provided text does not contain any maintenance issue. The given characters \u0022asdsadasdsad\u0022 do not form a coherent sentence or maintenance concern. In order to provide a summary, I would need a detailed maintenance issue to extract the key points and condense them into a shorter form.",
+    "ImageUrl": null,
+    "Status": "New",
+    "Resolution": "",
+    "CreatedAt": "2025-11-01T22:28:27.3349811Z",
+    "UpdatedAt": "2025-11-01T22:28:27.3349811Z"
+  },
+  {
+    "Id": "cc83a9c2-d64a-4ccc-8d51-5fdd5192b045",
+    "Name": "\u05E9\u05D3\u05D2\u05E9\u05D3",
+    "Email": "sadasd@gmail.com",
+    "Description": "asdasd asdasd ",
+    "Summary": "It seems that the provided maintenance issue description is not available, as it was replaced with the text \u0022asdasd asdasd\u0022. In order to provide a summary, I would need the actual maintenance issue description. Could you please provide more details about the issue that needs to be summarized?",
+    "ImageUrl": null,
+    "Status": "New",
+    "Resolution": "",
+    "CreatedAt": "2025-11-01T22:29:55.8219637Z",
+    "UpdatedAt": "2025-11-01T22:29:55.8219637Z"
+  }
+]
