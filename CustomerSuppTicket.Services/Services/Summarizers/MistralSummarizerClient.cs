@@ -1,4 +1,4 @@
-﻿using CustomerSuppTicket.Common.Intefaces;
+﻿using CustomerSuppTicket.Common.Intefaces.Services;
 using CustomerSuppTicket.Services.Options;
 using Microsoft.Extensions.Options;
 using System;

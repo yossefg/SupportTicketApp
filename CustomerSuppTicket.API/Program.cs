@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CustomerSuppTicket.Common.DTOs;
-using CustomerSuppTicket.Common.Intefaces;
+using CustomerSuppTicket.Common.Intefaces.Services;
 using CustomerSuppTicket.Common.Mappings;
 using CustomerSuppTicket.Common.ViewModels;
 using CustomerSuppTicket.Entity.Models;

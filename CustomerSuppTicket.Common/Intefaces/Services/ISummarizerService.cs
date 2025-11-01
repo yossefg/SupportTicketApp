@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomerSuppTicket.Common.Intefaces
+namespace CustomerSuppTicket.Common.Intefaces.Services
 {
     public interface ISummarizerService
     {
