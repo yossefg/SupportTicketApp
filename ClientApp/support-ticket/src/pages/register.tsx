@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField, Container, Typography } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Container,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 import { register } from "../services/ticketService";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 
@@ -11,6 +18,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,7 +39,10 @@ export default function Register() {
     }
 
     try {
-      await register(username, password, email);
+      const token = await register(username, password, email);
+      if (rememberMe) localStorage.setItem("jwt", token);
+      else sessionStorage.setItem("jwt", token);
+
       setSuccessMessage("Your account has been created successfully.");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
@@ -89,7 +100,15 @@ export default function Register() {
           {successMessage}
         </Typography>
       )}
-
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
+        }
+        label="Remember Me"
+      />
       <Button
         variant="contained"
         color="primary"

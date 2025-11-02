@@ -68,12 +68,10 @@ export default function NewTicket() {
       const response = await createTicket(payload);
       console.log("Ticket created:", response.data);
 
-      // ✅ הודעת הצלחה למשתמש
       setSuccessMessage(
         "Your request has been received. You will receive an email shortly with your ticket number."
       );
 
-      // ✅ reset fields
       setName("");
       setEmail("");
       setDescription("");

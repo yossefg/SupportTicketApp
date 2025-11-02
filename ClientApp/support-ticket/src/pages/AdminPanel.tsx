@@ -2,41 +2,33 @@ import { useEffect, useState } from "react";
 import {
   Container,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   TextField,
   MenuItem,
   Select,
   InputLabel,
   FormControl,
+  Button,
+  Box,
 } from "@mui/material";
-import { getTickets, updateTicket } from "../services/ticketService";
+import { DataGrid, GridColDef, GridRowModel } from "@mui/x-data-grid";
+import { getTickets, saveAllTickets } from "../services/ticketService";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 
 export default function AdminPanel() {
   const [tickets, setTickets] = useState<any[]>([]);
-  const [editingTicket, setEditingTicket] = useState<any>(null);
-  const [newStatus, setNewStatus] = useState("");
-  const [resolutionText, setResolutionText] = useState("");
+  const [editedTickets, setEditedTickets] = useState<Record<string, any>>({});
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
   const navigate = useNavigate();
+  useDocumentTitle("Support Ticket — Admin Panel");
 
   useEffect(() => {
     getTickets()
       .then((res) => setTickets(res.data))
       .catch((error) => {
-        if (error.response && error.response.status === 401) {
+        if (error?.response?.status === 401) {
           navigate("/login/authSectionEnter=true", { replace: true });
         } else {
           throw error;
@@ -44,161 +36,145 @@ export default function AdminPanel() {
       });
   }, []);
 
-  useDocumentTitle("Support Ticket — Admin Panel");
-
-  const handleUpdateClick = (ticket: any) => {
-    setEditingTicket(ticket);
-    setNewStatus(ticket.status);
-    setResolutionText(ticket.resolution || "");
+  const processRowUpdate = (newRow: GridRowModel, oldRow: GridRowModel) => {
+    if (
+      newRow.status !== oldRow.status ||
+      newRow.resolution !== oldRow.resolution
+    ) {
+      setEditedTickets((prev) => ({ ...prev, [newRow.id]: newRow }));
+    }
+    return newRow;
   };
 
-  const handleSave = async () => {
-    if (!editingTicket) return;
+  const handleSaveChanges = async () => {
+    const changes = Object.values(editedTickets);
+    if (changes.length === 0) return;
 
-    await updateTicket({
-      id: editingTicket.id,
-      status: newStatus,
-      resolution: resolutionText,
+    await saveAllTickets(changes).then((s) => {
+      setTickets(s.data);
     });
-
-    setTickets((prev) =>
-      prev.map((t) =>
-        t.id === editingTicket.id
-          ? { ...t, status: newStatus, resolution: resolutionText }
-          : t
-      )
-    );
-
-    setEditingTicket(null);
+    setEditedTickets({});
   };
 
-  // פילטור לפי חיפוש וסטטוס
-  const filteredTickets = tickets.filter((t) => {
+  const columns: GridColDef[] = [
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "summary",
+      headerName: "Summary",
+      flex: 1,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      editable: true,
+      type: "singleSelect",
+      valueOptions: ["Open", "In Progress", "Resolved"],
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "resolution",
+      headerName: "Resolution",
+      flex: 2,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+      renderCell: (params) => (
+        <div style={{ width: "100%", textAlign: "left", whiteSpace: "normal" }}>
+          {params.value || ""}
+        </div>
+      ),
+    },
+  ];
+
+  const filtered = tickets.filter((t) => {
     const matchesStatus = statusFilter ? t.status === statusFilter : true;
+    const s = search.toLowerCase();
+
     const matchesSearch =
-      t.name.toLowerCase().includes(search.toLowerCase()) ||
-      (t.summary && t.summary.toLowerCase().includes(search.toLowerCase())) ||
-      (t.resolution &&
-        t.resolution.toLowerCase().includes(search.toLowerCase()));
+      (t.name || "").toLowerCase().includes(s) ||
+      (t.summary || "").toLowerCase().includes(s) ||
+      (t.resolution || "").toLowerCase().includes(s);
+
     return matchesStatus && matchesSearch;
   });
 
-  // פונקציה להדגשת המחרוזת החיפשית
-  const highlight = (text: string | undefined) => {
-    if (!text) return "-";
-    if (!search) return text;
-    const regex = new RegExp(`(${search})`, "gi");
-    const parts = text.split(regex);
-    return parts.map((part, i) =>
-      regex.test(part) ? (
-        <span key={i} style={{ backgroundColor: "yellow" }}>
-          {part}
-        </span>
-      ) : (
-        part
-      )
-    );
-  };
-
   return (
-    <Container maxWidth="md">
-      <Typography variant="h4" marginY={4}>
+    <Container maxWidth="md" dir="ltr">
+      <Typography variant="h4" marginY={4} textAlign="left">
         Admin Panel
       </Typography>
 
-      {/* Search and Status Filter */}
-      <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+      <Box sx={{ display: "flex", gap: "1rem", mb: 2 }}>
         <TextField
           label="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          variant="outlined"
+          fullWidth
         />
-        <FormControl variant="outlined" style={{ minWidth: 150 }}>
+
+        <FormControl sx={{ minWidth: 150 }}>
           <InputLabel>Status Filter</InputLabel>
           <Select
+            label="Status Filter"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            label="Status Filter"
           >
             <MenuItem value="">All</MenuItem>
             <MenuItem value="Open">Open</MenuItem>
             <MenuItem value="In Progress">In Progress</MenuItem>
             <MenuItem value="Resolved">Resolved</MenuItem>
+            <MenuItem value="New">New</MenuItem>
           </Select>
         </FormControl>
+      </Box>
+
+      {/* LTR for correct column order */}
+      <div dir="ltr">
+        <DataGrid
+          rows={filtered}
+          columns={columns}
+          getRowId={(row) => row.id}
+          autoHeight
+          disableRowSelectionOnClick
+          processRowUpdate={processRowUpdate}
+          hideFooter
+          sx={{
+            "& .MuiDataGrid-columnHeader": {
+              textAlign: "left",
+              justifyContent: "flex-start",
+            },
+            "& .MuiDataGrid-cell": {
+              textAlign: "left",
+              justifyContent: "flex-start",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              textAlign: "left",
+              width: "100%",
+            },
+          }}
+        />
       </div>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Summary</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Resolution</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredTickets.map((ticket) => (
-            <TableRow key={ticket.id}>
-              <TableCell>{highlight(ticket.name)}</TableCell>
-              <TableCell>{highlight(ticket.summary)}</TableCell>
-              <TableCell>{highlight(ticket.status)}</TableCell>
-              <TableCell>{highlight(ticket.resolution)}</TableCell>
-              <TableCell>
-                <Button
-                  size="small"
-                  onClick={() => navigate(`/ticket/${ticket.id}`)}
-                >
-                  View
-                </Button>
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() => handleUpdateClick(ticket)}
-                >
-                  Update
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      {/* Modal for editing */}
-      <Dialog open={!!editingTicket} onClose={() => setEditingTicket(null)}>
-        <DialogTitle>Update Ticket</DialogTitle>
-        <DialogContent>
-          <TextField
-            select
-            label="Status"
-            value={newStatus}
-            onChange={(e) => setNewStatus(e.target.value)}
-            fullWidth
-            margin="dense"
-          >
-            <MenuItem value="Open">Open</MenuItem>
-            <MenuItem value="In Progress">In Progress</MenuItem>
-            <MenuItem value="Resolved">Resolved</MenuItem>
-          </TextField>
-          <TextField
-            label="Resolution"
-            value={resolutionText}
-            onChange={(e) => setResolutionText(e.target.value)}
-            fullWidth
-            margin="dense"
-            multiline
-            rows={3}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setEditingTicket(null)}>Cancel</Button>
-          <Button onClick={handleSave} color="success">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Box sx={{ textAlign: "right", mt: 3 }}>
+        <Button
+          variant="contained"
+          color="success"
+          disabled={Object.keys(editedTickets).length === 0}
+          onClick={handleSaveChanges}
+        >
+          Save Changes
+        </Button>
+      </Box>
     </Container>
   );
 }

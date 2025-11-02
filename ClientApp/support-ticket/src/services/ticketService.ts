@@ -26,3 +26,7 @@ export const updateTicket = async (data: {
 }) => {
   return await api.put(`tickets`, data);
 };
+
+export function saveAllTickets(tickets: any[]) {
+  return api.put("tickets/bulk-update", tickets);
+}

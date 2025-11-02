@@ -8,6 +8,8 @@
  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
  </ItemGroup>
  <ItemGroup>
+ <ProjectReference Include="..\CustomerSuppTicket.Common\CustomerSuppTicket.Common.csproj" />
+ <ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entities.csproj" />
  <ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entity.csproj" />
  </ItemGroup>
 </Project>

@@ -1,22 +1,11 @@
-using CustomerSuppTicket.Common.DTOs;
+﻿using CustomerSuppTicket.Common.DTOs;
 using CustomerSuppTicket.Common.Intefaces.Services;
-using CustomerSuppTicket.Common.Mappings;
 using CustomerSuppTicket.Entity.Models;
-using CustomerSuppTicket.Repository.Repositories;
-using EllipticCurve.Utils;
+using CustomerSuppTicket.Common.Intefaces.Repositoy;
+using CustomerSuppTicket.Common.ViewModels;
 
 namespace CustomerSuppTicket.Services.Services
 {
-    public interface ITicketService
-    {
-        Task<IEnumerable<TicketDto>> GetAllAsync();
-        Task<TicketDto?> GetByIdAsync(Guid id);
-        Task<TicketDto> CreateAsync(TicketDto dto);
-        Task<TicketDto?> UpdateAsync(Guid id, TicketDto dto);
-
-        Task<TicketDto?> UpdateStatusAsync(TicketUpdateStatusViewModel dto);
-    }
-
     public class TicketService : ITicketService
     {
         private readonly ISummarizerService _summarizerService;
@@ -47,7 +36,7 @@ namespace CustomerSuppTicket.Services.Services
         public async Task<TicketDto> CreateAsync(TicketDto dto)
         {
             var summarize  = await getSummarize(dto.Description ?? string.Empty);
-            var entity = new Ticket
+            var entity = new TicketEntity
             {
                 Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id,
                 Name = dto.Name ?? string.Empty,
@@ -73,7 +62,6 @@ namespace CustomerSuppTicket.Services.Services
                 }
                 catch
                 {
-                    // swallow email exceptions for now; consider logging
                 }
             }
 
@@ -95,7 +83,7 @@ namespace CustomerSuppTicket.Services.Services
             return MapToDto(existing);
         }
 
-        private TicketDto MapToDto(Ticket t) => new TicketDto
+        private TicketDto MapToDto(TicketEntity t) => new TicketDto
         {
             Id = t.Id,
             Name = t.Name,
@@ -118,6 +106,24 @@ namespace CustomerSuppTicket.Services.Services
             existing.UpdatedAt = DateTime.UtcNow;
             await _repo.UpdateAsync(existing);
             return MapToDto(existing);
+        }
+
+        public async Task<List<TicketDto>> UpdateStatusBulkAsync(List<TicketUpdateStatusViewModel> list)
+        {
+            var tickets = (await _repo.GetAllAsync()).ToList();
+
+            foreach (var updated in list)
+            {
+                var ticket = tickets.FirstOrDefault(t => t.Id == updated.Id);
+                if (ticket == null) continue;
+
+                ticket.Status = updated.Status;
+                ticket.Resolution = updated.Resolution;
+            }
+
+            await _repo.UpdateBulkAsync(tickets);
+
+            return tickets.Select(t => MapToDto(t)).ToList();
         }
     }
 }

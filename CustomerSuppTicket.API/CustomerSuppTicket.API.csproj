@@ -17,13 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomerSuppTicket.Common\CustomerSuppTicket.Common.csproj" />
-    <ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entity.csproj" />
+    <ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entities.csproj" />
     <ProjectReference Include="..\CustomerSuppTicket.Repository\CustomerSuppTicket.Repository.csproj" />
     <ProjectReference Include="..\CustomerSuppTicket.Services\CustomerSuppTicket.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Files\" />
   </ItemGroup>
 
 </Project>

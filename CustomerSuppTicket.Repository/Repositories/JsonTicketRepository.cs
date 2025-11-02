@@ -1,7 +1,8 @@
 using System.Text.Json;
+using CustomerSuppTicket.Common.Intefaces.Repositoy;
 using CustomerSuppTicket.Entity.Models;
 
-namespace CustomerSuppTicket.Repository.Repositories
+namespace CustomerSuppTicketEntity.Repository.Repositories
 {
     public class JsonTicketRepository : ITicketRepository
     {
@@ -22,60 +23,68 @@ namespace CustomerSuppTicket.Repository.Repositories
             if (!File.Exists(_filePath)) File.WriteAllText(_filePath, "[]");
         }
 
-        private async Task<List<Ticket>> ReadAllAsync()
+        private async Task<List<TicketEntity>> ReadAllAsync()
         {
             await _lock.WaitAsync();
             try
             {
                 using var stream = File.Open(_filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                if (stream.Length == 0) return new List<Ticket>();
-                return await JsonSerializer.DeserializeAsync<List<Ticket>>(stream, _opts) ?? new List<Ticket>();
+                if (stream.Length == 0) return new List<TicketEntity>();
+                return await JsonSerializer.DeserializeAsync<List<TicketEntity>>(stream, _opts) ?? new List<TicketEntity>();
             }
             finally { _lock.Release(); }
         }
-
-        private async Task WriteAllAsync(List<Ticket> tickets)
+            
+        private async Task WriteAllAsync(List<TicketEntity> TicketEntitys)
         {
             await _lock.WaitAsync();
             try
             {
                 using var stream = File.Open(_filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-                await JsonSerializer.SerializeAsync(stream, tickets, _opts);
+                await JsonSerializer.SerializeAsync(stream, TicketEntitys, _opts);
             }
             finally { _lock.Release(); }
         }
 
-        public async Task<Ticket> AddAsync(Ticket ticket)
+        public async Task<TicketEntity> AddAsync(TicketEntity TicketEntity)
         {
             var list = await ReadAllAsync();
-            if (ticket.Id == Guid.Empty) ticket.Id = Guid.NewGuid();
-            ticket.CreatedAt = DateTime.UtcNow;
-            ticket.UpdatedAt = ticket.CreatedAt;
-            list.Add(ticket);
+            if (TicketEntity.Id == Guid.Empty) TicketEntity.Id = Guid.NewGuid();
+            TicketEntity.CreatedAt = DateTime.UtcNow;
+            TicketEntity.UpdatedAt = TicketEntity.CreatedAt;
+            list.Add(TicketEntity);
             await WriteAllAsync(list);
-            return ticket;
+            return TicketEntity;
         }
 
-        public async Task<IEnumerable<Ticket>> GetAllAsync()
+        public async Task<IEnumerable<TicketEntity>> GetAllAsync()
         {
             var list = await ReadAllAsync();
             return list;
         }
 
-        public async Task<Ticket?> GetByIdAsync(Guid id)
+        public async Task<TicketEntity?> GetByIdAsync(Guid id)
         {
             var list = await ReadAllAsync();
             return list.FirstOrDefault(t => t.Id == id);
         }
 
-        public async Task UpdateAsync(Ticket ticket)
+        public async Task UpdateAsync(TicketEntity TicketEntity)
         {
             var list = await ReadAllAsync();
-            var idx = list.FindIndex(t => t.Id == ticket.Id);
+            var idx = list.FindIndex(t => t.Id == TicketEntity.Id);
             if (idx == -1) return;
-            ticket.UpdatedAt = DateTime.UtcNow;
-            list[idx] = ticket;
+            TicketEntity.UpdatedAt = DateTime.UtcNow;
+            list[idx] = TicketEntity;
             await WriteAllAsync(list);
+        }
+
+        public async Task UpdateBulkAsync(List<TicketEntity> TicketEntitys)
+        {
+            if (TicketEntitys == null || TicketEntitys.Count == 0)
+                return;
+
+            await WriteAllAsync(TicketEntitys);
         }
     }
 }

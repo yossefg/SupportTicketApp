@@ -1,6 +1,6 @@
 namespace CustomerSuppTicket.Entity.Models
 {
-    public class Ticket
+    public class TicketEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
