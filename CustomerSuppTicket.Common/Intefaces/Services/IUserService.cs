@@ -18,5 +18,7 @@ namespace CustomerSuppTicket.Common.Intefaces.Services
         /// <param name="dto">User data transfer object</param>
         /// <returns>The created user DTO</returns>
         Task<UserDto?> getUserByUserName(string userName);
+
+        Task<bool> LoginAsync(UserDto dto);
     }
 }

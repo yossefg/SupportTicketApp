@@ -11,7 +11,7 @@ namespace CustomerSuppTicket.Services.Services
         private readonly ISummarizerService _summarizerService;
         private readonly ITicketRepository _repo;
         private readonly IEmailSender _emailSender;
-        public TicketService(ITicketRepository repo, IEmailSender emailSender , ISummarizerService summarizerService)
+        public TicketService(ITicketRepository repo, IEmailSender emailSender, ISummarizerService summarizerService)
 
         {
             _summarizerService = summarizerService;
@@ -30,12 +30,13 @@ namespace CustomerSuppTicket.Services.Services
             var t = await _repo.GetByIdAsync(id);
             return t is null ? null : MapToDto(t);
         }
-        private async Task<string> getSummarize(string text) {
+        private async Task<string> getSummarize(string text)
+        {
             return await _summarizerService.SummarizeFaultDescriptionAsync(text);
         }
         public async Task<TicketDto> CreateAsync(TicketDto dto)
         {
-            var summarize  = await getSummarize(dto.Description ?? string.Empty);
+            var summarize = await getSummarize(dto.Description ?? string.Empty);
             var entity = new TicketEntity
             {
                 Id = dto.Id == Guid.Empty ? Guid.NewGuid() : dto.Id,
@@ -54,17 +55,8 @@ namespace CustomerSuppTicket.Services.Services
             // send email notification
             if (!string.IsNullOrWhiteSpace(added.Email))
             {
-                var subject = $"Ticket received: {added.Summary}";
-                var body = $"Hello {added.Name},\n\nYour ticket has been received. Ticket Id: {added.Id}\nSummary: {added.Summary}\nStatus: {added.Status}\n\nRegards,\nSupport Team";
-                try
-                {
-                    await _emailSender.SendEmailAsync(dto.Name,entity.Id.ToString(),added.Email);
-                }
-                catch
-                {
-                }
+                await _emailSender.SendEmailAsync(dto.Name, entity.Id.ToString(), added.Email);
             }
-
             return MapToDto(added);
         }
 

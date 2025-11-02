@@ -10,7 +10,6 @@ using SendGrid.Helpers.Mail;
 
 namespace CustomerSuppTicket.Services.Services
 {
-    // SendGrid-based implementation of IEmailSender that reads credentials from configuration/environment
     public class MailKitEmailSender : IEmailSender
     {
         private readonly SendGridOptions options;
@@ -66,10 +65,8 @@ namespace CustomerSuppTicket.Services.Services
 
             var response = await client.SendEmailAsync(msg);
 
-            // Optionally, you can inspect response.StatusCode and log failures
             if (response.StatusCode != System.Net.HttpStatusCode.Accepted && response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                // swallow or throw depending on your needs; here we choose to throw to surface the problem
                 var respBody = await response.Body.ReadAsStringAsync();
                 throw new InvalidOperationException($"SendGrid send failed: {response.StatusCode} - {respBody}");
             }

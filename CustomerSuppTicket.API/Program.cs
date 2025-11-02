@@ -124,9 +124,9 @@ app.MapPost("/api/register", async (UserDto login, IUserService service) =>
 });
 app.MapPost("/api/login", async (LoginViewModel login, IUserService service) =>
 {
-    UserDto? user = await service.getUserByUserName(login.Username);
+    bool isLogIn =await service.LoginAsync(new UserDto { Username = login.Username, Password = login.Password });
 
-    if(user == null || user.Password != login.Password)
+    if(!isLogIn)
         return Results.Unauthorized();
 
     var tokenHandler = new JwtSecurityTokenHandler();
