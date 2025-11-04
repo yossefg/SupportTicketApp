@@ -1,4 +1,4 @@
-﻿namespace CustomerSuppTicket.API.EndPoints
+﻿namespace CustomerSuppTicket.API.Controllers
 {
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
@@ -6,10 +6,9 @@
     using CustomerSuppTicket.Common.DTOs;
     using CustomerSuppTicket.Common.ViewModels;
     using CustomerSuppTicket.Common.Intefaces.Services;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.IdentityModel.Tokens;
 
-    public static class UserEndpoints
+    public static class UserController
     {
         public static void MapUserEndpoints(this WebApplication app)
         {

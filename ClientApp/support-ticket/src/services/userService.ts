@@ -7,3 +7,4 @@ export const register = (username: string, password: string, email: string) =>
   api
     .post(`user/register`, { username, password, email })
     .then((res) => res.data.token);
+

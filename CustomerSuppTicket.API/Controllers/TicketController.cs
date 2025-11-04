@@ -1,11 +1,11 @@
-﻿namespace CustomerSuppTicket.API.EndPoints
+﻿namespace CustomerSuppTicket.API.Controllers
 {
     using AutoMapper;
     using CustomerSuppTicket.Common.DTOs;
     using CustomerSuppTicket.Common.ViewModels;
     using CustomerSuppTicket.Common.Intefaces.Services;
 
-    public static class TicketEndpoints
+    public static class TicketController
     {
         public static void MapTicketEndpoints(this WebApplication app)
         {

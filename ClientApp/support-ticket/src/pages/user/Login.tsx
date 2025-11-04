@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { login } from "../../services/userService";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { useUserStore } from "../../store/userStore";
+import { log } from "console";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -20,10 +22,9 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const authSectionEnter = searchParams.get("authSectionEnter");
-
+  const setUser = useUserStore((state) => state.setUser);
+  const username1 = useUserStore((state) => state.username);
   useDocumentTitle("Support Ticket — Login");
 
   const handleLogin = async () => {
@@ -32,11 +33,12 @@ export default function Login() {
 
     try {
       const token = await login(username, password);
-
+      setUser(username);
+      console.log(username1);
       // שמירת token
       if (rememberMe) localStorage.setItem("jwt", token);
       else sessionStorage.setItem("jwt", token);
-
+      console.log();
       navigate("/admin");
     } catch (err) {
       setErrorMessage("Incorrect username or password. Please try again.");
@@ -50,13 +52,6 @@ export default function Login() {
       <Typography variant="h4" align="center" marginY={4}>
         Login
       </Typography>
-
-      {authSectionEnter && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
-          To access this page, authentication is required.
-        </Alert>
-      )}
-
       <TextField
         fullWidth
         label="Username"

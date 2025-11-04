@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { register } from "../../services/userService";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { useUserStore } from "../../store/userStore";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -19,6 +20,7 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const setUser = useUserStore((state) => state.setUser);
 
   const navigate = useNavigate();
 
@@ -40,6 +42,7 @@ export default function Register() {
 
     try {
       const token = await register(username, password, email);
+      setUser(username);
       if (rememberMe) localStorage.setItem("jwt", token);
       else sessionStorage.setItem("jwt", token);
 

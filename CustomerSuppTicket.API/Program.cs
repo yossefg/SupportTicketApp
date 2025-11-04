@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CustomerSuppTicket.API.EndPoints;
+using CustomerSuppTicket.API.Controllers;
 using CustomerSuppTicket.Common.Intefaces.Repositories;
 using CustomerSuppTicket.Common.Intefaces.Repositoy;
 using CustomerSuppTicket.Common.Intefaces.Services;
