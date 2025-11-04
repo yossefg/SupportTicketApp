@@ -8,6 +8,7 @@ The Service Ticket System provides a complete workflow for creating, managing, a
 
 1. Ticket Creation (Public Access)
 <img width="939" height="615" alt="image" src="https://github.com/user-attachments/assets/e691905d-e058-4d32-a046-d1df4aceba3c" />
+
 The system allows any user — including those who are not authenticated — to open a new service ticket.
 
 A public user can:
