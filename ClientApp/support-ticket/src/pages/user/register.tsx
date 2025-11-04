@@ -8,8 +8,8 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import { register } from "../services/ticketService";
-import useDocumentTitle from "../hooks/useDocumentTitle";
+import { register } from "../../services/userService";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Register() {
   const [username, setUsername] = useState("");

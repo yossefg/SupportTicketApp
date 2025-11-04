@@ -10,6 +10,5 @@
  <ItemGroup>
  <ProjectReference Include="..\CustomerSuppTicket.Common\CustomerSuppTicket.Common.csproj" />
  <ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entities.csproj" />
- <ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entity.csproj" />
  </ItemGroup>
 </Project>

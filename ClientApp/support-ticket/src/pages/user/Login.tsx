@@ -10,8 +10,8 @@ import {
   Checkbox,
   CircularProgress,
 } from "@mui/material";
-import { login } from "../services/ticketService";
-import useDocumentTitle from "../hooks/useDocumentTitle";
+import { login } from "../../services/userService";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Login() {
   const [username, setUsername] = useState("");

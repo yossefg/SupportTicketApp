@@ -6,7 +6,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CustomerSuppTicket.Common\CustomerSuppTicket.Common.csproj" />
-		<ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entity.csproj" />
+		<ProjectReference Include="..\CustomerSuppTicket.Entity\CustomerSuppTicket.Entities.csproj" />
 		<ProjectReference Include="..\CustomerSuppTicket.Repository\CustomerSuppTicket.Repository.csproj" />
 	</ItemGroup>
 	<ItemGroup>
