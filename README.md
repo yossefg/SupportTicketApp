@@ -58,6 +58,7 @@ Secured access to the ticket table and ticket details
 
 When a user submits a service ticket, the system automatically sends a confirmation email.
 The email includes:
+<img width="641" height="486" alt="image" src="https://github.com/user-attachments/assets/52f83ba5-4d6d-4ae2-b284-7f7454c3bf0e" />
 
 The ticket ID
 
