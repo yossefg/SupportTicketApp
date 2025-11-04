@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
+
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(TicketProfile));
 
@@ -39,17 +40,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // CORS
-builder.Services.AddCors(o => o.AddPolicy("AllowAll",
-    p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+builder.Services.AddAppCors(builder.Environment);
+
 
 var app = builder.Build();
 
-app.UseCors("AllowAll");
+
+ app.UseAppCors();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
 app.UseAuthentication();
