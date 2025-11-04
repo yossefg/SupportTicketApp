@@ -7,7 +7,7 @@ Overview
 The Service Ticket System provides a complete workflow for creating, managing, and tracking customer service requests. It supports both public ticket creation and authenticated user operations, ensuring accessibility while maintaining proper security controls.
 
 1. Ticket Creation (Public Access)
-<img width="939" height="615" alt="image" src="https://github.com/user-attachments/assets/e691905d-e058-4d32-a046-d1df4aceba3c" />
+<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/e691905d-e058-4d32-a046-d1df4aceba3c" />
 
 The system allows any user — including those who are not authenticated — to open a new service ticket.
 
@@ -42,8 +42,8 @@ Editing Tickets
 A logged-in user may edit existing tickets they created, allowing them to add information or correct details.
 
 Registration and Login
-<img width="939" height="615" alt="image" src="https://github.com/user-attachments/assets/f53994c5-b74a-46ea-adc5-cbfb69e4dff3" />
-<img width="946" height="644" alt="image" src="https://github.com/user-attachments/assets/b8503e8e-b3be-45ff-b7ac-3ea7caf30011" />
+<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/f53994c5-b74a-46ea-adc5-cbfb69e4dff3" />
+<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/b8503e8e-b3be-45ff-b7ac-3ea7caf30011" />
 
 The system includes:
 
@@ -52,13 +52,13 @@ User registration
 Login and authentication
 
 Secured access to the ticket table and ticket details
-<img width="949" height="634" alt="image" src="https://github.com/user-attachments/assets/682e1bde-57dd-4a53-a911-b795e8db82ac" />
+<img width="300" height="300"alt="image" src="https://github.com/user-attachments/assets/682e1bde-57dd-4a53-a911-b795e8db82ac" />
 
 3. Email Notifications
 
 When a user submits a service ticket, the system automatically sends a confirmation email.
 The email includes:
-<img width="641" height="486" alt="image" src="https://github.com/user-attachments/assets/52f83ba5-4d6d-4ae2-b284-7f7454c3bf0e" />
+<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/52f83ba5-4d6d-4ae2-b284-7f7454c3bf0e" />
 
 The ticket ID
 
