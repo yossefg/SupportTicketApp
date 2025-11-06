@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CustomerSuppTicket.API.Controllers;
+using CustomerSuppTicket.API.MiddlewareExtensions;
 using CustomerSuppTicket.Common.Intefaces.Repositories;
 using CustomerSuppTicket.Common.Intefaces.Repositoy;
 using CustomerSuppTicket.Common.Intefaces.Services;
@@ -9,6 +10,8 @@ using CustomerSuppTicket.Services.Options;
 using CustomerSuppTicket.Services.Services;
 using CustomerSuppTicket.Services.Services.AiServices;
 using CustomerSuppTicketEntity.Repository.Repositories;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +38,13 @@ builder.Services.AddScoped<ISummarizerService, MistralSummarizerClient>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+//Logging
+builder.Host.UseSerilog();
+// טעינת קונפיגורציה של Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -45,8 +55,10 @@ builder.Services.AddAppCors(builder.Environment);
 
 var app = builder.Build();
 
+app.UseGlobalExceptionHandler(app.Environment);
 
- app.UseAppCors();
+
+app.UseAppCors();
 
 if (app.Environment.IsDevelopment())
 {
